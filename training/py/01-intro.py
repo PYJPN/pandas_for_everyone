@@ -4,18 +4,18 @@ print(df)  # OK
 print(type(df))  # 型
 print(df.shape)  # 属性のため、shape（）をつけるとエラーになる
 print(df.columns)  # 属性
-print(df.dtypes)  # 
+print(df.dtypes)  # 属性
 print(df.info())  # method df for detail info
 ''' 1.2 '''
 ''' 1.3 '''
-print(df.head()) # head five row
+print(df.head())  # head five row
 
 country_df = df['country']  # Only Country Columns Data
 print(country_df.head())
 print(country_df.tail())  # tail last five row
 
 subset = df[['country', 'continent', 'year']]
-print(subset)  # 
+print(subset)  # country continent year columns data
 # print(df[0]) # key error
 
 country_df = df['country']
@@ -26,7 +26,7 @@ country_df_list = df[['country']]
 print(type(country_df_list))  # Data Frame
 print(country_df_list)
 
-print(df['country'])  # [] Series 
+print(df['country'])  # [] Series
 print(df.country)  # . Series
 
 print(df)  # index label row number default
@@ -36,21 +36,22 @@ print(df.loc[99])  # index label 100
 print(df.tail(1))
 number_of_rows = df.shape[0]
 print(number_of_rows)  # total rows 1704
-last_row_index = number_of_rows -1  # 1704 -1
+last_row_index = number_of_rows - 1  # 1704 -1
 print(last_row_index)
 print(df.loc[last_row_index])
-# print(df.loc[number_of_rows]) # keyerror index label 1704 Max index label 1703
+# print(df.loc[number_of_rows])
+# keyerror index label 1704 Max index label 1703
 
 print(df.tail(n=1))
 
 subset_loc = df.loc[0]
 subset_head = df.head(n=1)
-print(type(subset_loc)) # Series
-print(type(subset_head)) # DataFrame
+print(type(subset_loc))  # Series
+print(type(subset_head))  # DataFrame
 
 print(df.loc[[0, 99, 999]])
 print(df.iloc[1])  # OK
-print(df.iloc[-1])  # OK last index label 
+print(df.iloc[-1])  # OK last index label
 print(df.iloc[[0, 99, 999]])
 
 subset = df.loc[:, ['year', 'pop']]  # .loc[[rows], [columns]] is coumns name
@@ -115,8 +116,8 @@ print(grouped_year_df_lifeExp)  # SeriesGroupBy object
 mean_lifeExp_by_year = grouped_year_df_lifeExp.mean()
 print(mean_lifeExp_by_year)  # Series
 multi_group_var = (
-    df.groupby(['year', 'continent'])[\
-        ['lifeExp', 'gdpPercap']]\
+    df.groupby(['year', 'continent'])[
+        ['lifeExp', 'gdpPercap']]
     .mean()
 )
 print(multi_group_var)
@@ -138,3 +139,45 @@ print(global_yearly_life_expectancy)
 import matplotlib.pyplot as plt
 global_yearly_life_expectancy.plot()
 plt.show()
+''' 2.1 '''
+s = pd.Series(['banana', 42])
+print(s)  # 0    banana\n1    42\ndtype: object
+s = pd.Series(
+    data=['Wes McKinney', 'Creator of Pandas'],
+    index=['Person', 'Who']
+    )
+print(s)
+# Person         Wes McKinney\nWho    Creator of Pandas\ndtype: object
+
+scientists = pd.DataFrame(
+    data={
+        'Name': ['Rosaline Franklin', 'William Gosset'],
+        'Occupation': ['Chemist', 'Statistician'],
+        'Born': ['1920-07-25', '1876-06-13'],
+        'Died': ['1958-04-16', '1937-10-16'],
+        'Age': [37, 61]
+    },
+    index=['Rosaline Franklin', 'William Gosset'],
+    columns=['Occupation', 'Born', 'Died', 'Age']
+)
+print(scientists)
+#  Occupation        Born        Died  Age\n
+#  Rosaline Franklin    Chemist  1920-07-25  1958-04-16   37\n
+#  William Gosset  Statistician  1876-06-13  1937-10-16   61
+#  print(scientists)
+#  Name Occupation        Born        Died  Age\n
+#  0  Rosaline Franklin    Chemist  1920-07-25  1958-04-16   37\n
+#  1     William Gosset  Statistician  1876-06-13  1937-10-16   61
+
+first_row = scientists.loc['William Gosset']
+print(type(first_row))  # Series
+print(first_row)
+# Occupation    Statistician\n
+# Born            1876-06-13\n
+# Died            1937-10-16\n
+# Age                     61\n
+# dtype: object
+print(first_row.index)
+# Index(['Occupation', 'Born', 'Died', 'Age'], dtype='object')
+print(first_row.values)
+# ['Statistician' '1876-06-13' '1937-10-16' 61]

@@ -80,6 +80,33 @@ print(subset)
 subset = df.iloc[:, 0:6:2]
 print(subset)
 
+subset = df.iloc[:, 0:6:]
+print(subset)
+
+subset = df.iloc[:, 0::2]
+print(subset)
+
+subset = df.iloc[:, ::2]
+print(subset)
+
+subset = df.iloc[:, ::]
+print(subset)
+
+print(df.loc[42, 'country'])
+print(df.iloc[42, 0])
+
+print(df.iloc[[0, 99, 999], [0, 3, 5]])
+print(df.loc[[0, 99, 999], ['country', 'lifeExp', 'gdpPercap']])
+
+print(df.loc[10:13, :])  # 10 to 13
+print(df.iloc[10:13, :])  # 10 to 12 Do you OK?
+""" 
+1.4 
+"""
+print(df)
+
+
+
 
 
 

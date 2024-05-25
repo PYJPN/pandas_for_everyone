@@ -1,45 +1,45 @@
 import pandas as pd
 df = pd.read_csv('././data/gapminder.tsv', sep='\t')
-print(df) # OK
-print(type(df)) # 型
-print(df.shape) # 属性のため、shape（）をつけるとエラーになる
-print(df.columns) # 属性
-print(df.dtypes) # 
-print(df.info()) # method df for detail info
+print(df)  # OK
+print(type(df))  # 型
+print(df.shape)  # 属性のため、shape（）をつけるとエラーになる
+print(df.columns)  # 属性
+print(df.dtypes)  # 
+print(df.info())  # method df for detail info
 ''' 1.2 '''
 ''' 1.3 '''
 print(df.head()) # head five row
 
-country_df = df['country'] # Only Country Columns Data
+country_df = df['country']  # Only Country Columns Data
 print(country_df.head())
-print(country_df.tail()) # tail last five row
+print(country_df.tail())  # tail last five row
 
 subset = df[['country', 'continent', 'year']]
-print(subset) # 
+print(subset)  # 
 # print(df[0]) # key error
 
 country_df = df['country']
-print(type(country_df)) # series
+print(type(country_df))  # series
 print(country_df)
 
 country_df_list = df[['country']]
-print(type(country_df_list)) # Data Frame
+print(type(country_df_list))  # Data Frame
 print(country_df_list)
 
-print(df['country']) # [] Series 
-print(df.country) # . Series
+print(df['country'])  # [] Series 
+print(df.country)  # . Series
 
-print(df) # index label row number default
-print(df.loc[0]) # index label start row 0
-print(df.loc[99]) # index label 100
-#print(df.loc[-1]) # keyerror can't last index label
+print(df)  # index label row number default
+print(df.loc[0])  # index label start row 0
+print(df.loc[99])  # index label 100
+# print(df.loc[-1]) # keyerror can't last index label
 print(df.tail(1))
 number_of_rows = df.shape[0]
-print(number_of_rows) # total rows 1704
-last_row_index = number_of_rows -1 # 1704 -1
+print(number_of_rows)  # total rows 1704
+last_row_index = number_of_rows -1  # 1704 -1
 print(last_row_index)
 print(df.loc[last_row_index])
-#print(df.loc[number_of_rows]) # keyerror index label 1704 Max index label 1703
+# print(df.loc[number_of_rows]) # keyerror index label 1704 Max index label 1703
 
 print(df.tail(n=1))
 
@@ -49,21 +49,21 @@ print(type(subset_loc)) # Series
 print(type(subset_head)) # DataFrame
 
 print(df.loc[[0, 99, 999]])
-print(df.iloc[1]) # OK
-print(df.iloc[-1]) # OK last index label 
+print(df.iloc[1])  # OK
+print(df.iloc[-1])  # OK last index label 
 print(df.iloc[[0, 99, 999]])
 
-subset = df.loc[:, ['year', 'pop']] # .loc[[rows], [columns]] is coumns name
+subset = df.loc[:, ['year', 'pop']]  # .loc[[rows], [columns]] is coumns name
 print(subset)
-subset = df.iloc[:, [2, 4, -1]] # .iloc[[row], [columns]] is index label
+subset = df.iloc[:, [2, 4, -1]]  # .iloc[[row], [columns]] is index label
 
 small_range = list(range(5))
-print(small_range) # [0, 1, 2, 3, 4]
+print(small_range)  # [0, 1, 2, 3, 4]
 subset = df.iloc[:, small_range]
 print(subset)
 
 small_range = list(range(3, 6))
-print(small_range) # 3, 4, 5
+print(small_range)  # 3, 4, 5
 subset = df.iloc[:, small_range]
 print(subset)
 
@@ -100,15 +100,41 @@ print(df.loc[[0, 99, 999], ['country', 'lifeExp', 'gdpPercap']])
 
 print(df.loc[10:13, :])  # 10 to 13
 print(df.iloc[10:13, :])  # 10 to 12 Do you OK?
-""" 
-1.4 
-"""
+""" 1.4 """
 print(df)
+print(df.groupby('year')['lifeExp'].mean())
 
+grouped_year_df = df.groupby('year')
+print(type(grouped_year_df))  # DataFrameGroupBy
+print(grouped_year_df)  # DataFrameGroupBy object
 
+grouped_year_df_lifeExp = grouped_year_df['lifeExp']
+print(type(grouped_year_df_lifeExp))  # SeriesGroupBy
+print(grouped_year_df_lifeExp)  # SeriesGroupBy object
 
+mean_lifeExp_by_year = grouped_year_df_lifeExp.mean()
+print(mean_lifeExp_by_year)  # Series
+multi_group_var = (
+    df.groupby(['year', 'continent'])[\
+        ['lifeExp', 'gdpPercap']]\
+    .mean()
+)
+print(multi_group_var)
+multi_group_var.index
+print(multi_group_var.index)
+# flat.index
+# print(flat.index)
+flat = multi_group_var.reset_index()
+print(flat.index)
+# print(grouped_year_df['lifeExp']) # SeriesGroupBy object
+# print(grouped_year_df['lifeExp'].mean()) # Series
 
-
-
-
-
+print(df.groupby('continent')['country'].nunique())
+print(df.groupby('continent')['country'].value_counts())
+# print(df.groupby('continent')['country'].unique())
+''' 1.5 '''
+global_yearly_life_expectancy = df.groupby('year')['lifeExp'].mean()
+print(global_yearly_life_expectancy)
+import matplotlib.pyplot as plt
+global_yearly_life_expectancy.plot()
+plt.show()

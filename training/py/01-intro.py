@@ -1,4 +1,7 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
 df = pd.read_csv('././data/gapminder.tsv', sep='\t')
 print(df)  # OK
 print(type(df))  # 型
@@ -6,8 +9,12 @@ print(df.shape)  # 属性のため、shape（）をつけるとエラーにな�
 print(df.columns)  # 属性
 print(df.dtypes)  # 属性
 print(df.info())  # method df for detail info
-''' 1.2 '''
-''' 1.3 '''
+'''
+1.2
+'''
+'''
+1.3
+'''
 print(df.head())  # head five row
 
 country_df = df['country']  # Only Country Columns Data
@@ -101,7 +108,9 @@ print(df.loc[[0, 99, 999], ['country', 'lifeExp', 'gdpPercap']])
 
 print(df.loc[10:13, :])  # 10 to 13
 print(df.iloc[10:13, :])  # 10 to 12 Do you OK?
-""" 1.4 """
+"""
+1.4
+"""
 print(df)
 print(df.groupby('year')['lifeExp'].mean())
 
@@ -133,13 +142,17 @@ print(flat.index)
 print(df.groupby('continent')['country'].nunique())
 print(df.groupby('continent')['country'].value_counts())
 # print(df.groupby('continent')['country'].unique())
-''' 1.5 '''
+'''
+1.5
+'''
 global_yearly_life_expectancy = df.groupby('year')['lifeExp'].mean()
 print(global_yearly_life_expectancy)
-import matplotlib.pyplot as plt
+
 global_yearly_life_expectancy.plot()
 plt.show()
-''' 2.1 '''
+'''
+2.1
+'''
 s = pd.Series(['banana', 42])
 print(s)  # 0    banana\n1    42\ndtype: object
 s = pd.Series(
@@ -181,3 +194,48 @@ print(first_row.index)
 # Index(['Occupation', 'Born', 'Died', 'Age'], dtype='object')
 print(first_row.values)
 # ['Statistician' '1876-06-13' '1937-10-16' 61]
+print(first_row.keys())
+# Index(['Occupation', 'Born', 'Died', 'Age'], dtype='object')
+print(first_row.index[0])
+print(first_row.keys()[0])
+print(first_row.index[-1])
+print(first_row.keys()[-1])
+
+ages = scientists['Age']
+print(ages)
+print(ages.mean())
+print(ages.min())
+print(ages.max())
+print(ages.std())
+print(ages.describe())
+"""
+2024/05/27
+"""
+'''
+2.2.2
+'''
+scientists = pd.read_csv('././data/scientists.csv')
+ages = scientists['Age']
+print(ages)
+print(ages.describe())
+print(ages.mean())
+print(ages[ages > ages.mean()])  # True
+print(ages > ages.mean())  # True False
+
+manual_bool_values = [True, True, False, False, True, True, False, True]
+print(ages[manual_bool_values])  # True
+print(ages + ages)  # 2 * ages
+print(ages * ages)  # ages ** 2
+print(ages + 100)  # ages + 100
+print(ages * 2)  # 2 * ages
+print(pd.Series([1, 100]))
+# 0      1\n1    100\n
+# dtype: int64
+print(ages + pd.Series([1, 100]))  # NaN 100
+
+# print(ages + np.array([1, 100]))  # NaN 100 Value Error
+print(ages)
+rev_ages = ages.sort_index(ascending=False)
+print(rev_ages)
+print(ages * 2)  # 2 * ages
+print(ages + rev_ages)  # ages + rev_ages

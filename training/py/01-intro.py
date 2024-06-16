@@ -239,3 +239,6 @@ rev_ages = ages.sort_index(ascending=False)
 print(rev_ages)
 print(ages * 2)  # 2 * ages
 print(ages + rev_ages)  # ages + rev_ages
+# 2024/06/16 19:56
+# 2.3 P.43
+print(ages * 2)

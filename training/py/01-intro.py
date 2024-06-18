@@ -242,3 +242,6 @@ print(ages + rev_ages)  # ages + rev_ages
 # 2024/06/16 19:56
 # 2.3 P.43
 print(ages * 2)
+
+scientists.index
+scientists.columns
